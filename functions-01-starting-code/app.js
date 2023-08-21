@@ -13,17 +13,16 @@ const RESULT_LOSE = 'LOSE';
 
 
 const GetPlayerChoice = function(){
-  const selection = prompt(`Choose ${ROCK}, ${PAPER} and, ${SCISSOR} to play.`).toUpperCase;
+  const selection = prompt(`${ROCK}, ${PAPER} and, ${SCISSOR}`).toUpperCase;
   if(
-    selection !== ROCK ||
-    selection !== PAPER ||
+    selection !== ROCK &&
+    selection !== PAPER &&
     selection !== SCISSOR 
     ) {
       alert(`Invalid choice, Player's choice back to default '${Default_player_choice}'`);
       return Default_player_choice;
-  }{
-    return selection;
   }
+  return selection;
 }
 
 const getComputerChoice = function(){
