@@ -36,7 +36,7 @@ const getComputerChoice = () =>{
 }
 
 
-const getWinner = (cChoice, pChoice) =>
+const getWinner = (cChoice, pChoice = Default_player_choice) =>
     cChoice === pChoice 
     ? RESULT_DRAW 
     : cChoice === ROCK && pChoice === PAPER ||
@@ -72,9 +72,13 @@ startGameBtn.addEventListener('click',() =>{
       console.log('The game is starting.....');
       const playerChoice = getPlayerChoice();
       const computerChoice = getComputerChoice();
-      const winner = getWinner(computerChoice, playerChoice);
-      console.log(winner);
-      let message = `You picked ${playerChoice} and the computer picked ${computerChoice}.`;
+      let winner;
+      if(playerChoice){
+        winner = getWinner(computerChoice, playerChoice);
+      }else{
+        winner = getWinner(computerChoice)
+      }
+      let message = `You picked ${playerChoice || Default_player_choice} and the computer picked ${computerChoice}.`;
       if (winner === RESULT_DRAW){
         message += 'It\' a draw';
       }else if(winner === RESULT_PLAYER_WINS){
@@ -85,3 +89,66 @@ startGameBtn.addEventListener('click',() =>{
       alert(message);
       gameIsRunning = false;
 });
+
+
+// not related to the GAME
+
+const combine = (resultHandler, operation, ...numbers) => {
+  const validateNumber = number => {
+    return isNaN(number) ? 0 : number;
+  };
+
+  let sum = 0;
+  for (const num of numbers) {
+    if (operation === 'ADD') {
+      sum += validateNumber(num);
+    } else {
+      sum -= validateNumber(num);
+    }
+  }
+  resultHandler(sum);
+};
+
+const subtractUp = function(resultHandler, ...numbers) {
+  let sum = 0;
+  for (const num of numbers) {
+    // don't use that
+    sum -= num;
+  }
+  resultHandler(sum, 'The result after adding all numbers is');
+};
+
+const showResult = (messageText, result) => {
+  alert(messageText + ' ' + result);
+};
+
+// combine(
+//   showResult.bind(this, 'The result after adding all numbers is:'),
+//   'ADD',
+//   1,
+//   5,
+//   'fdsa',
+//   -3,
+//   6,
+//   10
+// );
+// combine(
+//   showResult.bind(this, 'The result after adding all numbers is:'),
+//   'ADD',
+//   1,
+//   5,
+//   10,
+//   -3,
+//   6,
+//   10,
+//   25,
+//   88
+// );
+// combine(
+//   showResult.bind(this, 'The result after subtracting all numbers is:'),
+//   'SUBTRACT',
+//   1,
+//   10,
+//   15,
+//   20
+// );
